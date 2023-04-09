@@ -1,0 +1,13 @@
+# this is a sample YAML file to use to automate DMD runs
+# rename the files accordingly, also save the yaml file to the output/data directory to allow
+#       the DMD to be rerun with the exact same settings if we update things/if things go wrong.
+
+DATA_FOLDER : ""
+DATA_FILE : ""
+
+r : 2  # number of modes; can make this an array
+dt : 2 # timestep?
+
+CREATE_GIFS : True
+
+# add other variables here; only really need X, num_modes, and dt
