@@ -1,0 +1,4 @@
+# ignore datafiles used as they can be quite large
+*.zip
+*.vti
+*.nc
