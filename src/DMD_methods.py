@@ -103,7 +103,7 @@ class ImageExample:
         self.t = np.arange(dt,T,dt)
 
         # 2d example replicating the txtbook!
-        self.X,self.Y = np.meshgrid(np.arange(0,self.nx),np.arange(0,self.ny))
+        self.X,self.Y = np.meshgrid(np.arange(1,self.nx+1),np.arange(1,self.ny+1))
 
         # save spatial-temporal patterns 
         self.patterns = [] # list of DATA
@@ -245,28 +245,29 @@ class SpatioTemporalExample:
         self.xi = xi
         self.yi = 0
         # need nx and ny in image example...
-        self.nx = 0
-        self.ny = 0
+        #self.nx = 0
+        #self.ny = 0
 
         # check for the type of t (requires dt to be passed)
-        if type(t) == int:
-            self.t = np.arange(dt,t,dt)
-            self.dt = dt
-        else:
-            # assumes t is an array
-            self.t = t
-            self.dt = t[1] - t[0]
+        #if type(t) == int:
+        #    self.t = np.arange(dt,t,dt)
+        #    self.dt = dt
+        #else:
+        #    # assumes t is an array
+        
+        self.t = t
+        self.dt = t[1] - t[0]
 
-        self.nx = len(self.xi)
-        self.ny = len(self.yi)
-        self.n = self.nx * self.nt
+        #self.nx = len(self.xi)
+        #self.ny = len(self.yi)
+        #self.n = self.nx * self.nt
 
-        if self.ny != 0:
-            # 2d example replicating the txtbook!
-            self.X,self.Y = np.meshgrid(self.xi,self.yi)
-        else:
-            # 3d example from ch1 !!!
-            self.X,self.T = np.meshgrid(self.xi,self.t) # is a tuple
+        #if self.ny != 0:
+        #    # 2d example replicating the txtbook!
+        #    self.X,self.Y = np.meshgrid(self.xi,self.yi)
+        #else:
+        # 3d example from ch1 !!!
+        self.X,self.T = np.meshgrid(self.xi,self.t) # is a tuple
 
         # save spatial-temporal patterns 
         self.patterns = [] # list of DATA
@@ -288,16 +289,16 @@ class SpatioTemporalExample:
             self.funcs.append(f_i)
 
         # extract the frequency, amplitude, and range if given!
-        for f_i_keys in kwargs:
-            # format of data: 
-            #   [0] -> frequency
-            #   [1] -> amplitude
-            #   [2] -> range
-            freq_i = kwargs[f_i_keys][0]
-            self.freq.append(freq_i)
-            self.amp.append(kwargs[f_i_keys][1])
-            self.range.append(kwargs[f_i_keys][2])
-            self.lmbda.append(kwargs[f_i_keys][3](freq_i,self.dt)) # lmbda is a FUNCTION!!!
+        #for f_i_keys in kwargs:
+        #    # format of data: 
+        #    #   [0] -> frequency
+        #    #   [1] -> amplitude
+        #    #   [2] -> range
+        #    freq_i = kwargs[f_i_keys][0]
+        #    self.freq.append(freq_i)
+        #    self.amp.append(kwargs[f_i_keys][1])
+        #    self.range.append(kwargs[f_i_keys][2])
+        #    self.lmbda.append(kwargs[f_i_keys][3](freq_i,self.dt)) # lmbda is a FUNCTION!!!
 
         # compose all of the functions
         #self.f = 0
@@ -316,7 +317,7 @@ class SpatioTemporalExample:
         """
 
 
-    def plot_patterns(self,type='2d'):
+    def plot_patterns(self,type='3d'):
         """
         
             Plots individual signals (self.patterns) and combined signal (self.f)
@@ -326,9 +327,12 @@ class SpatioTemporalExample:
         if type=='3d':
             # case for surface data; sqaure-oval data might look different?
             i = 0
+            print(len(self.patterns))
             for jj in range(0,len(self.patterns)):
                 fig,ax = plt.subplots(subplot_kw={"projection":"3d"})
                 #surf = ax.plot_surface(self.mesh[0],self.mesh[1],self.patterns[jj],cmap=cm.coolwarm,linewidth=0,antialiased=False)
+                print(len(self.patterns[jj]))
+                print(len(self.patterns[jj][0]))
                 surf = ax.plot_surface(self.X,self.T,np.real(self.patterns[jj]),cmap=cm.coolwarm)
                 fig.colorbar(surf,shrink=0.5,aspect=5)
 
